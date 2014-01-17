@@ -1,2 +1,7 @@
-user: 2packofdoom@gmail.com
-pass: mclayt0
+Login: http://members.000webhost.com
+	user: 2packofdoom@gmail.com
+	pass: mclayt0
+
+Site(server) address:
+
+http://mobial.comeze.com
