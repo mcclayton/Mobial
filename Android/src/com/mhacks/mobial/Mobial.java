@@ -53,12 +53,42 @@ public class Mobial {
 			// Add the unix timestamp to the JSON
 			activityJSON.put("timeStamp", System.currentTimeMillis() / 1000L);
 			
-			//TODO: Make the POST request to the server here.
 			new Thread(new Runnable() {
 				public void run() {
 					postData("activityJSON", activityJSON.toString());
 				}
 			}).start();
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	public static void logVariableValue(Activity act, String variableName, String variableValue) {		
+		final JSONObject variableJSON = new JSONObject();
+
+		try {	
+			// Add the platform name to the JSON
+			variableJSON.put("platform", "Android");
+			
+			// Add the android device ID to the JSON
+			String android_id = Secure.getString(act.getBaseContext().getContentResolver(), Secure.ANDROID_ID); 
+			variableJSON.put("androidDeviceID", android_id);
+			
+			// Add the unix timestamp to the JSON
+			variableJSON.put("timeStamp", System.currentTimeMillis() / 1000L);
+			
+			// Add the variable name
+			variableJSON.put("variableName", variableName);
+			
+			// Add the variable value
+			variableJSON.put("variableValue", variableValue);
+			
+			new Thread(new Runnable() {
+				public void run() {
+					postData("variableJSON", variableJSON.toString());
+				}
+			}).start();			
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -112,7 +142,6 @@ public class Mobial {
 						gestureJSON.put("gestureDataArray", touchCoordsJSONArray);
 						touchCoordsJSONArray = new JSONArray();
 						
-						//TODO: Make the POST request to the server here.
 						new Thread(new Runnable() {
 							public void run() {
 								postData("gestureJSON", gestureJSON.toString());
