@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.provider.Settings.Secure;
 import android.util.Base64;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,22 +17,24 @@ import android.view.View;
 
 public class Mobial {
 
-	private static JSONArray activityFlowJSONArray = new JSONArray();
 	private static JSONArray touchCoordsJSONArray = new JSONArray();
 
 	public static void startTrackingActivityFlow(Activity act) {		
 		JSONObject activityJSON = new JSONObject();
 
 		try {	
+			// Add the current activity name to the JSON
+			activityJSON.put("activityName", act.getLocalClassName());
 			
-			activityJSON.put("activityName", act.getLocalClassName());	// Add the current activity name to the JSON
-			
-			// Take a screenshot, encode it, and add the encoded screenshot to the JSON
+			// Add the encoded activity screenshot to the JSON
 			Bitmap screenshot = takeScreenShot(act);
 			activityJSON.put("activityScreenshot", bitmapToString(screenshot));
-			activityFlowJSONArray.put(activityJSON);
-
-			System.out.println(activityFlowJSONArray.toString());
+			
+			// Add the android device ID to the JSON
+			String android_id = Secure.getString(act.getBaseContext().getContentResolver(), Secure.ANDROID_ID); 
+			activityJSON.put("androidDeviceID", android_id);
+			
+			System.out.println(activityJSON.toString());
 			//TODO: Make the POST request to the server here.
 
 		} catch (JSONException e) {
@@ -40,31 +43,45 @@ public class Mobial {
 		}		
 	}
 
-	public static void startTrackingGestures(Activity act) {
+	public static void startTrackingGestures(final Activity act) {
 		View view = (View) act.findViewById(android.R.id.content);
 		view.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 
 				JSONObject touchCoordJSON = new JSONObject();
+				String android_id = Secure.getString(act.getBaseContext().getContentResolver(), Secure.ANDROID_ID);
 
 				try {
+					// Add the android device ID to the JSON
+					touchCoordJSON.put("androidDeviceID", android_id);
+					// Add the current activity name to the JSON
+					touchCoordJSON.put("activityName", act.getLocalClassName());
+					
 					if (event.getAction() == MotionEvent.ACTION_DOWN) {
 						// The user started dragging
+						
+						// Add the android coordinates and state to the JSON
 						touchCoordJSON.put("x_coord", event.getX());
 						touchCoordJSON.put("y_coord", event.getY());
 						touchCoordJSON.put("state", "start_drag");
+						
 						touchCoordsJSONArray.put(touchCoordJSON);
 						return true;
 					} else if(event.getAction() == MotionEvent.ACTION_MOVE) {
 						// The user is dragging
+						
+						// Add the android coordinates and state to the JSON
 						touchCoordJSON.put("x_coord", event.getX());
 						touchCoordJSON.put("y_coord", event.getY());
 						touchCoordJSON.put("state", "dragging");
+						
 						touchCoordsJSONArray.put(touchCoordJSON);
 						return true;
 					} else if (event.getAction() == MotionEvent.ACTION_UP) {
 						// The user is done dragging
+						
+						// Add the android coordinates and state to the JSON
 						touchCoordJSON.put("x_coord", event.getX());
 						touchCoordJSON.put("y_coord", event.getY());
 						touchCoordJSON.put("state", "end_drag");
