@@ -1,7 +1,20 @@
 package com.mhacks.mobial;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +36,9 @@ public class Mobial {
 		JSONObject activityJSON = new JSONObject();
 
 		try {	
+			// Add the platform name to the JSON
+			activityJSON.put("platform", "Android");
+			
 			// Add the current activity name to the JSON
 			activityJSON.put("activityName", act.getLocalClassName());
 			
@@ -85,7 +101,8 @@ public class Mobial {
 						touchCoordJSON.put("state", "end_drag");
 						touchCoordsJSONArray.put(touchCoordJSON);
 						
-						JSONObject gestureJSON = new JSONObject();
+						final JSONObject gestureJSON = new JSONObject();
+						gestureJSON.put("platform", "Android");
 						gestureJSON.put("androidDeviceID", android_id);
 						gestureJSON.put("activityName", act.getLocalClassName());
 						gestureJSON.put("timeStamp", System.currentTimeMillis() / 1000L);
@@ -94,6 +111,11 @@ public class Mobial {
 						
 						System.out.println(gestureJSON.toString());
 						//TODO: Make the POST request to the server here.
+						new Thread(new Runnable() {
+							public void run() {
+								postData(gestureJSON.toString());
+							}
+						}).start();
 
 						return true;
 					}
@@ -130,5 +152,32 @@ public class Mobial {
 		encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
 		return encodedImage;
 	}
+	
+	public static void postData(String JSONString) {
+	    // Create a new HttpClient and Post Header
+	    HttpClient httpclient = new DefaultHttpClient();
+	    HttpPost httppost = new HttpPost("http://mobial.comeze.com/postToMobial.php");
+
+	    try {
+	        // Add your data
+	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	        nameValuePairs.add(new BasicNameValuePair("JSON", JSONString));
+	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+	        // Execute HTTP Post Request
+	        HttpResponse response = httpclient.execute(httppost);
+
+	        // Response String
+	        HttpEntity httpEntity = response.getEntity();
+	        System.out.println(EntityUtils.toString(response.getEntity()));
+	        
+	    } catch (ClientProtocolException e) {
+	    	e.printStackTrace();
+	        // TODO Auto-generated catch block
+	    } catch (IOException e) {
+	    	e.printStackTrace();
+	        // TODO Auto-generated catch block
+	    }
+	} 
 
 }
