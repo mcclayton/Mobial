@@ -34,6 +34,9 @@ public class Mobial {
 			String android_id = Secure.getString(act.getBaseContext().getContentResolver(), Secure.ANDROID_ID); 
 			activityJSON.put("androidDeviceID", android_id);
 			
+			// Add the unix timestamp to the JSON
+			activityJSON.put("timeStamp", System.currentTimeMillis() / 1000L);
+			
 			System.out.println(activityJSON.toString());
 			//TODO: Make the POST request to the server here.
 
@@ -85,6 +88,7 @@ public class Mobial {
 						JSONObject gestureJSON = new JSONObject();
 						gestureJSON.put("androidDeviceID", android_id);
 						gestureJSON.put("activityName", act.getLocalClassName());
+						gestureJSON.put("timeStamp", System.currentTimeMillis() / 1000L);
 						gestureJSON.put("gestureDataArray", touchCoordsJSONArray);
 						touchCoordsJSONArray = new JSONArray();
 						
