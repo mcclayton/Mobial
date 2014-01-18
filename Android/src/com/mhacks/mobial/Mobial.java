@@ -48,16 +48,11 @@ public class Mobial {
 		view.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-
+				
 				JSONObject touchCoordJSON = new JSONObject();
 				String android_id = Secure.getString(act.getBaseContext().getContentResolver(), Secure.ANDROID_ID);
 
 				try {
-					// Add the android device ID to the JSON
-					touchCoordJSON.put("androidDeviceID", android_id);
-					// Add the current activity name to the JSON
-					touchCoordJSON.put("activityName", act.getLocalClassName());
-					
 					if (event.getAction() == MotionEvent.ACTION_DOWN) {
 						// The user started dragging
 						
@@ -86,8 +81,14 @@ public class Mobial {
 						touchCoordJSON.put("y_coord", event.getY());
 						touchCoordJSON.put("state", "end_drag");
 						touchCoordsJSONArray.put(touchCoordJSON);
-
-						System.out.println(touchCoordsJSONArray.toString());
+						
+						JSONObject gestureJSON = new JSONObject();
+						gestureJSON.put("androidDeviceID", android_id);
+						gestureJSON.put("activityName", act.getLocalClassName());
+						gestureJSON.put("gestureDataArray", touchCoordsJSONArray);
+						touchCoordsJSONArray = new JSONArray();
+						
+						System.out.println(gestureJSON.toString());
 						//TODO: Make the POST request to the server here.
 
 						return true;
