@@ -33,7 +33,7 @@ public class Mobial {
 	private static JSONArray touchCoordsJSONArray = new JSONArray();
 
 	public static void startTrackingActivityFlow(Activity act) {		
-		JSONObject activityJSON = new JSONObject();
+		final JSONObject activityJSON = new JSONObject();
 
 		try {	
 			// Add the platform name to the JSON
@@ -53,11 +53,14 @@ public class Mobial {
 			// Add the unix timestamp to the JSON
 			activityJSON.put("timeStamp", System.currentTimeMillis() / 1000L);
 			
-			System.out.println(activityJSON.toString());
 			//TODO: Make the POST request to the server here.
-
+			new Thread(new Runnable() {
+				public void run() {
+					postData("activityJSON", activityJSON.toString());
+				}
+			}).start();
+			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}
@@ -109,18 +112,16 @@ public class Mobial {
 						gestureJSON.put("gestureDataArray", touchCoordsJSONArray);
 						touchCoordsJSONArray = new JSONArray();
 						
-						System.out.println(gestureJSON.toString());
 						//TODO: Make the POST request to the server here.
 						new Thread(new Runnable() {
 							public void run() {
-								postData(gestureJSON.toString());
+								postData("gestureJSON", gestureJSON.toString());
 							}
 						}).start();
 
 						return true;
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -153,7 +154,7 @@ public class Mobial {
 		return encodedImage;
 	}
 	
-	public static void postData(String JSONString) {
+	public static void postData(String JSONKey, String JSONValue) {
 	    // Create a new HttpClient and Post Header
 	    HttpClient httpclient = new DefaultHttpClient();
 	    HttpPost httppost = new HttpPost("http://mobial.comeze.com/postToMobial.php");
@@ -161,7 +162,7 @@ public class Mobial {
 	    try {
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-	        nameValuePairs.add(new BasicNameValuePair("JSON", JSONString));
+	        nameValuePairs.add(new BasicNameValuePair(JSONKey, JSONValue));
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 	        // Execute HTTP Post Request
@@ -173,10 +174,8 @@ public class Mobial {
 	        
 	    } catch (ClientProtocolException e) {
 	    	e.printStackTrace();
-	        // TODO Auto-generated catch block
 	    } catch (IOException e) {
 	    	e.printStackTrace();
-	        // TODO Auto-generated catch block
 	    }
 	} 
 
