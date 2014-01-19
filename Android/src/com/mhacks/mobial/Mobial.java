@@ -192,8 +192,12 @@ public class Mobial {
 	        // Add your data
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 	        nameValuePairs.add(new BasicNameValuePair(JSONKey, JSONValue));
-	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
+	        for (NameValuePair np : nameValuePairs) {
+	        	System.out.println("****\n"+np.getName()+" "+np.getValue()+"\n****");
+	        }
+	        
 	        // Execute HTTP Post Request
 	        HttpResponse response = httpclient.execute(httppost);
 

@@ -7,6 +7,29 @@
 
     <title>Möbial</title>
 
+    <script src="js/raphael.js"></script>
+    <script>
+        window.onload = function() {  
+            var screenWidth = 300;
+            var screenHeight = 500;
+            var paper = new Raphael(document.getElementById('canvas_container'), screenWidth, screenHeight);  
+            var c = paper.image("img/screen.png", 0, 0, screenWidth, screenHeight);
+
+            var st = paper.set();
+            st.push(
+                paper.circle(0, 0, 5),
+                paper.circle(5, 5, 5)
+            );
+            st.attr({fill: "red"}); // changes the fill of both circles
+
+        }  
+    </script>
+        <style type="text/css">  
+            #canvas_container {  
+                width: 500px;  
+                border: 1px solid #aaa;  
+            }  
+        </style>  
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
     <link rel="stylesheet" href="css/layouts/blog.css">
 
@@ -64,6 +87,9 @@
                                     <div id="container3" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
                             </div>
                         </div>
+                        <center>
+                            <div id="canvas_container"></div> 
+                        </center>
                             <center>
                                 Möbial is an incredibly simple to use mobile analytics platform.
                                 <br>
