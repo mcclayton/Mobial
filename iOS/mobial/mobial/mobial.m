@@ -10,4 +10,34 @@
 
 @implementation mobial
 
+-(void) startTrackingViewController{
+    NSDictionary *sendToServer;
+    NSError *error;
+    
+    NSArray *params = [[NSArray alloc]initWithObjects:@"platform",@"activityName",@"activityScreenshot",@"DeviceID",@"timeStamp", nil];
+    NSArray *data = [[NSArray alloc]initWithObjects:@"iOS", @"self", nil];
+    NSData *moreJSONdata;
+    UIImage *img;
+    //moreJSONdata = [takeScreenshot:img];
+    sendToServer = [NSDictionary dictionaryWithObjects:data forKeys:params];
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:sendToServer options:NSJSONWritingPrettyPrinted error:&error];
+    postToParse:jsonData;
+    return;
+}
+-(void)postToParse:(NSData*)jsonData{
+    //add parse posting logic
+    return;
+}
+
+-(void)takeScreenshot:(UIImage*)img{ //should be NSData
+    
+}
+
+
+-(void)error:(NSError *)error{
+    NSLog(@"error received from JSON");
+}
+
+
 @end

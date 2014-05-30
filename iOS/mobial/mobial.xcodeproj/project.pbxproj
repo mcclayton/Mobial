@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5701A28D18FE33CD001E6712 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5701A28C18FE33CD001E6712 /* QuartzCore.framework */; };
 		57099A9A1888DA6F0056DE50 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57099A991888DA6F0056DE50 /* Foundation.framework */; };
 		57099A9F1888DA6F0056DE50 /* mobial.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 57099A9E1888DA6F0056DE50 /* mobial.h */; };
 		57099AA11888DA6F0056DE50 /* mobial.m in Sources */ = {isa = PBXBuildFile; fileRef = 57099AA01888DA6F0056DE50 /* mobial.m */; };
@@ -42,6 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5701A28C18FE33CD001E6712 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		57099A961888DA6F0056DE50 /* libmobial.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libmobial.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		57099A991888DA6F0056DE50 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		57099A9D1888DA6F0056DE50 /* mobial-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mobial-Prefix.pch"; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5701A28D18FE33CD001E6712 /* QuartzCore.framework in Frameworks */,
 				57099A9A1888DA6F0056DE50 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -100,6 +103,7 @@
 		57099A981888DA6F0056DE50 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5701A28C18FE33CD001E6712 /* QuartzCore.framework */,
 				57099A991888DA6F0056DE50 /* Foundation.framework */,
 				57099AA71888DA6F0056DE50 /* XCTest.framework */,
 				57099AAA1888DA6F0056DE50 /* UIKit.framework */,
@@ -187,7 +191,7 @@
 		57099A8E1888DA6F0056DE50 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = espressbros;
 			};
 			buildConfigurationList = 57099A911888DA6F0056DE50 /* Build configuration list for PBXProject "mobial" */;
@@ -262,7 +266,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -300,7 +303,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -355,7 +357,6 @@
 		57099ABD1888DA700056DE50 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -376,7 +377,6 @@
 		57099ABE1888DA700056DE50 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -409,6 +409,7 @@
 				57099ABB1888DA700056DE50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		57099ABC1888DA700056DE50 /* Build configuration list for PBXNativeTarget "mobialTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +418,7 @@
 				57099ABE1888DA700056DE50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

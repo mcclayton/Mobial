@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface mobial : NSObject
-
+-(void)startTrackingViewController;
+-(void)postToParse:(NSData *)jsonData;
+-(NSData*)takeScreenshot:(UIImage*)img;
 @end
